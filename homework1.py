@@ -1,7 +1,7 @@
 import requests
 
 def make_request(endpoint, params=None):
-    base_url = "https://api.binance.com"
+    base_url = "https://fapi.binance.com"
     response = requests.get(base_url + endpoint, params=params)
     result = response.json()
     return result
@@ -13,7 +13,7 @@ def make_request(endpoint, params=None):
 if __name__ == '__main__':
 
     symbols = ['BTCUSDT','ETHUSDT','CAKEUSDT','SUIUSDT','COWUSDT','WIFUSDT','UMAUSDT','KAVAUSDT','SUNUSDT','TRBUSDT']
-    endpoint_ticker_24 = "/api/v1/ticker/24hr"
+    endpoint_ticker_24 = "/fapi/v1/ticker/24hr"
 
     max_heigh = 0
     max_drop = 0
@@ -39,5 +39,12 @@ if __name__ == '__main__':
                 ticker['symbol']: max_drop
             }
 
-    print("максимальный рост в процентах >>", dict_max_heigh)
-    print("максимальное падение в процентах >>", dict_max_drop)
+    if dict_max_heigh is None:
+        print("для роста нет данных для анализа")
+    else:
+        print("максимальный рост в процентах >>", dict_max_heigh)
+
+    if dict_max_drop is None:
+        print("для падения нет данных для анализа")
+    else:
+        print("максимальное падение в процентах >>", dict_max_drop)
